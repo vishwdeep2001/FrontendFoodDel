@@ -1,0 +1,34 @@
+export const topMeals=[
+    {
+        image:"https://cdn.pixabay.com/photo/2017/12/10/14/47/pizza-3010062_960_720.jpg",
+        title:"Pizza"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
+        title:"Burger"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/01/27/07/34/dosa-6971361_1280.jpg",
+        title:"Dosa"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2019/05/21/15/21/noodle-4219235_640.jpg",
+        title:"Chinese"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2017/03/10/13/49/fast-food-2132863_640.jpg",
+        title:"Sandwich"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/06/27/05/38/spices-7286739_640.jpg",
+        title:"Biryani"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/02/12/15/02/biryani-7009118_640.jpg",
+        title:"Indian Cuisine"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2018/03/15/12/16/food-3228057_640.jpg",
+        title:"Rolls"
+    }
+]
