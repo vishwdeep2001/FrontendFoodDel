@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionTypes"
+import { ADD_TO_FAVORITE_FAILURE, ADD_TO_FAVORITE_REQUEST, ADD_TO_FAVORITE_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionTypes"
 import { API_URL, api } from "../../config/api"
 
 export const registerUser = (reqData)=>async(dispatch)=>{
@@ -88,7 +88,7 @@ export const logout = ()=>async(dispatch)=>{
     try{
        
         localStorage.clear();
-        dispatch({type:LOGOUT_SUCCESS})
+        dispatch({type:LOGOUT})
         console.log("logout success")
 
     }

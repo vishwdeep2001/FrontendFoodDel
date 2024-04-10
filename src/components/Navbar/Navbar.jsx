@@ -24,7 +24,7 @@ export const Navbar = () => {
     <div className='px-5 z-50 py-[.8rem] bg-[#e91e63] lg:px-20 flex justify-between'>
       <div className='flex items-center space-x-4'>
         
-          <li className='logo font-semibold text-gray-30 text-2xl'>
+          <li onClick={()=>navigate("/")} className='logo font-semibold text-gray-30 text-2xl'>
             FoodieZone
           </li>
         </div>
