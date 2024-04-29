@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Home.css"
 import { MultiItemCarousel } from './MultiItemCarousel/MultiItemCarousel'
 import RestaurantCard from '../Restaurant/RestaurantCard'
-
+import {useDispatch, useSelector} from "react-redux"
+import {getAllRestaurantsAction} from '../State/Restaurant/Action'
+import { useNavigate } from 'react-router-dom'
 
 
 const restaurants = [1, 1, 1, 1, 1, 1, 1, 1];
 
 export const Home = () => {
+  const dispatch = useDispatch()
+  const jwt = localStorage.getItem("jwt")
+  const {restaurant}=useSelector(store=>store)
+  const navigate = useNavigate()
+  useEffect (()=>{
+    dispatch(getAllRestaurantsAction(jwt))
+  },[])
+ 
   return (
     <div className='pb-10'>
       <section className='banner -z-50 relative flex flex-col justify-center items-center'>
@@ -23,13 +33,12 @@ export const Home = () => {
         <MultiItemCarousel></MultiItemCarousel>
       </section>
       <section className='px-5 lg:px-20 pt-10'>
-        <h1 className='text-2xl font-semibold text-gray-400 pb-8'>Order from our Handpicked Favorites</h1>
-        <div className='flex flex-wrap items-center justify-around gap-5'>
-          {restaurants.map((item, index) => (
-            <RestaurantCard key={index} />
-          ))}
-        </div>
-      </section>
+  <h1 className='text-2xl font-semibold text-gray-400 pb-8'>Order from our Handpicked Favorites</h1>
+  <div className='flex flex-wrap items-center justify-around gap-5'>
+    {restaurant.restaurants.map((item) =><RestaurantCard item={item} />
+    )}
+  </div>
+</section> 
     </div>
   )
 }
