@@ -20,4 +20,3 @@ export const orderReducer =(state = initialState,{ type, payload})=>{
         return state;
     }
 };
-rertin
