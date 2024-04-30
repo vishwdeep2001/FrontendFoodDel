@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { Person } from '@mui/icons-material';
 import {useSelector} from "react-redux";
 export const Navbar = () => {
-  const {auth}=useSelector(store=>store)
+  const {auth,cart}=useSelector(store=>store)
   // console.log(auth.user);
   const navigate = useNavigate();
   const handleAvatarClick=()=>{
@@ -43,12 +43,13 @@ export const Navbar = () => {
           </IconButton>}
           </div>
           <div className=''>
-          <IconButton>
-          <Badge color="primary" badgeContent={3}>
-            <ShoppingCartIcon sx={{ fontSize: '1.5rem' }}></ShoppingCartIcon>
-            </Badge>
-          
-        </IconButton>
+          <IconButton onClick={()=>navigate("/cart")}>
+          <Badge color="primary" badgeContent={cart.cart?.item? cart.cart.item.length : 0}>
+  <ShoppingCartIcon sx={{ fontSize: '1.5rem' }} />
+</Badge>
+
+</IconButton>
+
           </div>
         </div>
       

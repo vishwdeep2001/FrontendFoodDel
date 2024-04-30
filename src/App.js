@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { getUser } from './components/State/Authentication/Action';
 
 import {useDispatch,useSelector} from "react-redux";
+import { findCart } from './components/State/Cart/Action';
 
 function App() {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ function App() {
   useEffect(()=>{
 
     dispatch(getUser( auth.jwt || jwt ))
+    dispatch(findCart(jwt))
   },[auth.jwt])
   return (
     <ThemeProvider theme={darkTheme}>

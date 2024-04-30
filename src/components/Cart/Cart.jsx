@@ -7,6 +7,7 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import {Button, Card} from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
 
 export const style = {
     position: 'absolute',
@@ -42,7 +43,7 @@ const Cart = () => {
     const createOrderUsingSelectedAddress=()=> setOpen(true)
     const handleOpenAddressModel=()=>{}
     const [open, setOpen] = React.useState(false);
-   
+   const {cart} =useSelector(store=>store)
     const handleClose = () => setOpen(false);
 
   return (
@@ -50,7 +51,7 @@ const Cart = () => {
         <main className='lg:flex justify-between'>
             <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
          
-            {items.map(()=><CartItem></CartItem>)}
+            {cart.cart.item && cart.cart.item.map((item)=><CartItem item={item}></CartItem>)}
             <Divider/>
             <div className='billDetails px-5 text-sm'>
             <p className='font-extralight py-5'>Bill Details</p>
