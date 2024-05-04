@@ -33,16 +33,9 @@ const CartItem = ({item}) => {
                         <p>{item.food.name}</p>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center space-x-1'>
-                            <div className='flex items-center space-x-1'>
-    <IconButton onClick={() => handleUpdateCartItem(-1)}>
-        <RemoveCircleOutlineIcon/>
-    </IconButton>
-    <div className='w-5 h-5 text-xs flex items-center justify-center'>{item.quantity}</div>
-    <IconButton onClick={() => handleUpdateCartItem(1)}>
-        <AddCircleOutlineIcon/>
-    </IconButton>
-</div>
-
+                                <IconButton onClick={()=>handleUpdateCartItem(-1)}><RemoveCircleOutlineIcon/></IconButton>
+                                <div className='w-5 h-5 text-xs flex items-center justify-center'>{item.quantity}</div>
+                                <IconButton onClick={()=>handleUpdateCartItem(1)}><AddCircleOutlineIcon/></IconButton>
                             </div>
                         </div>
                     </div>
@@ -50,7 +43,7 @@ const CartItem = ({item}) => {
                 </div>
             </div>
             <div className='pt-3 space-x-2'>
-            {item.ingredients && item.ingredients.map((ingredient) => <Chip label={ingredient} />)}
+            {item.ingredients.map((ingredient)=><Chip label={ingredient}/>)}
             </div>
         </div>
     );

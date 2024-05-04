@@ -8,6 +8,7 @@ import "./Navbar.css"
 import { useNavigate } from 'react-router-dom';
 import { Person } from '@mui/icons-material';
 import {useSelector} from "react-redux";
+import VegetarianImage from './vegetarian_5247413.png';
 export const Navbar = () => {
   const {auth,cart}=useSelector(store=>store)
   // console.log(auth.user);
@@ -23,7 +24,8 @@ export const Navbar = () => {
   return (
     <div className='px-5 z-50 py-[.8rem] bg-[#e91e63] lg:px-20 flex justify-between'>
       <div className='flex items-center space-x-4'>
-        
+      <img src={VegetarianImage} width="50" height="50"/>
+
           <li onClick={()=>navigate("/")} className='logo font-semibold text-gray-30 text-2xl'>
             FoodieZone
           </li>
@@ -37,10 +39,16 @@ export const Navbar = () => {
             </IconButton>
           </div>
           <div className=''>
-          {auth.user ?<Avatar onClick ={handleAvatarClick} sx={{ bgcolor: 'white', color: pink.A400 }}> {auth.user.fullName[0].toUpperCase()} </Avatar>:
-          <IconButton onClick={()=>navigate("/account/login")}>
-            <Person/>
-          </IconButton>}
+          {auth.user ? (
+  <Avatar onClick={handleAvatarClick} sx={{ bgcolor: 'white', color: pink.A400 }}>
+    {auth.user.fullName ? auth.user.fullName[0].toUpperCase() : ''}
+  </Avatar>
+) : (
+  <IconButton onClick={() => navigate("/account/login")}>
+    <Person/>
+  </IconButton>
+)}
+           
           </div>
           <div className=''>
           <IconButton onClick={()=>navigate("/cart")}>

@@ -7,7 +7,8 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import {Button, Card} from "@mui/material";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrder } from '../State/Order/Action';
 
 export const style = {
     position: 'absolute',
@@ -27,6 +28,14 @@ const initialValues={
     Pincode:"",
     City:""
 }
+
+const Cart = () => {
+  const createOrderUsingSelectedAddress=()=> {};
+  const handleOpenAddressModel=()=>setOpen(true);
+  const [open, setOpen] = React.useState(false);
+ const {cart,auth} =useSelector(store=>store)
+ const dispatch=useDispatch();
+  const handleClose = () => setOpen(false);
 const validationSchema = Yup.object().shape({
   // StreetAddress: Yup.string().required("Street Address is required"),
   // State: Yup.string().required("State is required"),
@@ -36,29 +45,40 @@ const validationSchema = Yup.object().shape({
 
 
 const handleSubmit=(values)=>{
+  const data={
+    jwt:localStorage.getItem("jwt"),
+     order : {
+      restaurantId : cart.cart.item[0].food?.restaurant.id,
+      deliveryAddress: {
+        fullName: auth.user?.fullName,
+        streetAddress: values.streetAddress,
+        city: values.city,
+        state: values.state,
+        postalCode: values.pincode,
+        country: "India"
+      }
+  
+    
+    }
+  }
+  dispatch(createOrder(data))
   console.log("form value ",values)
 };
-const items=[1,1]
-const Cart = () => {
-    const createOrderUsingSelectedAddress=()=> setOpen(true)
-    const handleOpenAddressModel=()=>{}
-    const [open, setOpen] = React.useState(false);
-   const {cart} =useSelector(store=>store)
-    const handleClose = () => setOpen(false);
+
 
   return (
     <>
         <main className='lg:flex justify-between'>
             <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
          
-            {cart.cart.item && cart.cart.item.map((item)=><CartItem item={item}></CartItem>)}
+            {cart.cart?.item.map((item)=><CartItem item={item}></CartItem>)}
             <Divider/>
             <div className='billDetails px-5 text-sm'>
             <p className='font-extralight py-5'>Bill Details</p>
             <div className='space-y-3'>
                 <div className='flex justify-between text-gray-400'>
                     <p>Item total</p>
-                    <p>₹599</p>
+                    <p>₹{cart.cart?.total}</p>
                 </div>
                 <div className='flex justify-between text-gray-400'>
                     <p>Delivery Fee</p>
@@ -76,7 +96,7 @@ const Cart = () => {
             </div>
             <div className='flex justify-between text-gray-400'>
             <p>Total Pay</p>
-            <p>₹3300</p>
+            <p>₹{cart.cart?.total+21+33+81}</p>
             </div>
             </div>
            
@@ -104,69 +124,39 @@ const Cart = () => {
           </section>
         </main>
         <Modal
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <Box sx={{
-    ...style,
-    backgroundColor: 'black',
-    // Change the background color to whatever color you want
-    opacity: 1 // Set opacity to 1 to make it fully opaque
-  }}>
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
-      <Form>
-    <Grid container spacing={2}>
-        <Grid item xs={12}>
-            <Field as={TextField} name="StreetAddress" label="Street Address" fullWidth variant="outlined" 
-            // error={!ErrorMessage("StreetAddress")}
-            // helperText={
-            //     <ErrorMessage>{(msg)=><span className='text-red-600'>{msg}</span>}</ErrorMessage>
-            // }
-            >
-
-            </Field>
-        </Grid>
-        <Grid item xs={12}>
-            <Field as={TextField} name="state" label="State" fullWidth variant="outlined" 
-            // error={!ErrorMessage("StreetAddress")}
-            // helperText={
-            //     <ErrorMessage>{(msg)=><span className='text-red-600'>{msg}</span>}</ErrorMessage>
-            // }
-            >
-
-            </Field>
-        </Grid>
-        <Grid item xs={12}>
-            <Field as={TextField} name="City" label="City" fullWidth variant="outlined" 
-            // error={!ErrorMessage("StreetAddress")}
-            // helperText={
-            //     <ErrorMessage>{(msg)=><span className='text-red-600'>{msg}</span>}</ErrorMessage>
-            // }
-            >
-
-            </Field>
-        </Grid>
-        <Grid item xs={12}>
-            <Field as={TextField} name="Pincode" label="Pincode" fullWidth variant="outlined" 
-            // error={!ErrorMessage("StreetAddress")}
-            // helperText={
-            //     <ErrorMessage>{(msg)=><span className='text-red-600'>{msg}</span>}</ErrorMessage>
-            // }
-            >
-
-            </Field>
-        </Grid>
-        <Grid item xs={12}>
-        <Button fullWidth variant='contained' type="submit" color="primary">Deliver Here</Button>
-        </Grid >
-
-    </Grid>
-    </Form>
-    </Formik>
-  </Box>
-</Modal>
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+            <Form>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Field as={TextField} name="streetAddress" label="Street Address" fullWidth variant="outlined" />
+                  <ErrorMessage name="streetAddress" component="div" className="error" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field as={TextField} name="state" label="State" fullWidth variant="outlined" />
+                  <ErrorMessage name="state" component="div" className="error" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field as={TextField} name="city" label="City" fullWidth variant="outlined" />
+                  <ErrorMessage name="city" component="div" className="error" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field as={TextField} name="pincode" label="Pincode" fullWidth variant="outlined" />
+                  <ErrorMessage name="pincode" component="div" className="error" />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button fullWidth variant='contained' type="submit" color="primary">Deliver Here</Button>
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
+        </Box>
+      </Modal>
     </>
   )
 }
